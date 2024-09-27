@@ -26,7 +26,6 @@ return new class extends Migration {
             $table->text('note')->nullable();
             $table->string('user');
             $table->softDeletes();
-
             $table->timestamps();
         });
     }

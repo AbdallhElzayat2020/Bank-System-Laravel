@@ -1,88 +1,6 @@
-/*------------------------------------------------------------------
-[Master Stylesheet]
 
-Project        :   VALEX - HTML5 Bootstrap Admin Template
-Version        :   V.1
-Create Date    :   09/05/20
-Copyright      :   Spruko Technologies Private Limited 
-Author         :   SprukoSoft
-Author URL     :   https://themeforest.net/user/sprukosoft
-Support	       :   support@spruko.com
-License        :   Licensed under ThemeForest License
-
--------------------------------------------------------------------*/
-/*
-1.  Accordions
-2.  Alerts
-3.  Badges
-4.  Breadcrumbs
-5.  Buttons
-6.  Card
-7.  Carousel
-8.  Dropdown
-9.  Forms
-10. Grid
-11. Input-group
-12. Modals
-13. Navigation
-14. Pagination
-15. Popover
-16. Progress
-17. Tables
-18. Toast
-19. Tooltip
-20. Tabs
-21. Main-content
-22. Header
-23. Horizontal-menu
-24. Profile
-25. Iconbar
-26. Datatable
-27. Date-picker
-28. Date-time-picker
-29. Jqvmap
-30. Chart
-31. Parsely
-32. Rangeslider
-33. Select2
-34. Spectrum
-35. Calendar
-36. Chat
-37 Contacts
-38. Error
-39. Invoice
-40. Mail
-41. Profile
-42. Background
-43. Border
-44. Height
-45. Margin
-46. Opacity
-47. Padding
-48. Position
-49. Typography
-50. Width
-51. Tags
-52. Navbar
-53. Wizard
-54. P-scroll
-55. Rating
-56. Timeline
-57. Countdown
-58. Image
-59. List
-60. Checkbox
-61  Radio
-62. Toggle
-63  Listgroup
-64  Jumborton
-65  Custom-control
-66  Custom-styles
-67  Tabs
-*/
-/* ######## FONT ######## */
 /* ############### FONTS IMPORT ############### */
-@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900");
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
 /* ######## BOOTSTRAP ######## */
 /*Color variables*/
 /*gray variables*/
@@ -90,8 +8,8 @@ License        :   Licensed under ThemeForest License
 /*black variables*/
 /*shadow variables*/
 html {
-  font-family: sans-serif;
-  line-height: 1.15;
+    font-family: "Cairo", system-ui;
+    line-height: 1.15;
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
 
@@ -100,7 +18,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Cairo", system-ui;
   font-size: 0.875rem;
   font-weight: 400;
   line-height: 1.5;
@@ -190,7 +108,7 @@ a {
       outline: 0; }
 
 pre, code, kbd, samp {
-  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family: "Cairo", system-ui;
   font-size: 1em; }
 
 pre {
@@ -234,7 +152,7 @@ button {
 
 input, button, select, optgroup, textarea {
   margin: 0;
-  font-family: inherit;
+  font-family: "Cairo", system-ui;
   font-size: inherit;
   line-height: inherit; }
 
@@ -1973,7 +1891,7 @@ pre {
 .badge {
   font-size: 10px !important;
   font-weight: 500 !important;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Cairo", system-ui;
   padding: 3px 5px 4px !important; }
 
 .badge-light {
@@ -2327,7 +2245,7 @@ a.badge-dark.focus {
 .breadcrumb-style1 .breadcrumb-item, .breadcrumb-style2 .breadcrumb-item, .breadcrumb-style3 .breadcrumb-item {
   font-size: 11px;
   font-weight: 500;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Cairo", system-ui;
   letter-spacing: .5px;
   text-transform: uppercase; }
 
@@ -2352,7 +2270,8 @@ a.badge-dark.focus {
 .breadcrumb-style2 .breadcrumb-item + .breadcrumb-item::before, .breadcrumb-style3 .breadcrumb-item + .breadcrumb-item::before {
   width: 16px;
   text-align: center;
-  font-family: 'Ionicons'; }
+  font-family: "Cairo", system-ui;
+ }
 
 .breadcrumb-style2 .breadcrumb-item + .breadcrumb-item::before {
   content: '\f3cf'; }
@@ -2365,7 +2284,7 @@ a.badge-dark.focus {
   align-items: center;
   font-size: 10px;
   font-weight: 500;
-  font-family: "Roboto", sans-serif;
+  font-family: "Cairo", system-ui;
   letter-spacing: 1px;
   text-transform: uppercase;
   color: #949eb7;
@@ -6193,7 +6112,7 @@ textarea.form-control.is-invalid, textarea.form-control.parsley-error {
   z-index: 1060;
   display: block;
   max-width: 276px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: "Cairo", system-ui;
   font-style: normal;
   font-weight: 400;
   line-height: 1.5;
@@ -12734,7 +12653,7 @@ pre {
       .card-dashboard-two .card-header h6 small {
         font-size: 12px;
         font-weight: 400;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-family: "Cairo", system-ui;
         margin-left: 5px;
         color: #7987a1;
         letter-spacing: normal; }

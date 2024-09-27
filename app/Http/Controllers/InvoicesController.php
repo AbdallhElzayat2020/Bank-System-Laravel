@@ -12,7 +12,7 @@ class InvoicesController extends Controller
      */
     public function index()
     {
-        //
+        return view('Dashboard.Invoices.invoices');
     }
 
     /**
