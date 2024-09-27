@@ -67,39 +67,42 @@
                                 <tr>
                                     <th class="wd-15p border-bottom-0">ID</th>
                                     <th class="wd-15p border-bottom-0">اسم القسم</th>
-                                    <th class="wd-20p border-bottom-0">ملاحظات</th>
                                     <th class="wd-20p border-bottom-0">تم الاضافة بواسطة</th>
                                     <th class="wd-20p border-bottom-0">العمليات</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($sections as $key => $section)
+                                @if (isset($sections) && count($sections) > 0)
+                                    @foreach ($sections as $key => $section)
+                                        <tr>
+                                            <td>{{ $key + 1 }}</td>
+                                            <td>{{ $section->section_name }}</td>
+                                            <td>{{ $section->created_by }}</td>
+                                            <td class="d-flex align-items-center justify-center gap-3 ">
+                                                <a class="modal-effect btn mx-2 btn-outline-primary btn-sm"
+                                                    data-effect="effect-scale" data-toggle="modal"
+                                                    data-id="{{ $section->id }}"
+                                                    data-section_name="{{ $section->section_name }}" title="تعديل"
+                                                    href="#modaldemo7">
+                                                    <i class="las la-edit" style="font-size:20px"></i>
+                                                </a>
+
+                                                <a class="modal-effect btn mx-2 btn-sm btn-danger"
+                                                    data-effect="effect-scale" data-id="{{ $section->id }}"
+                                                    data-section_name="{{ $section->section_name }}" data-toggle="modal"
+                                                    href="#modaldemo6" title="حذف">
+                                                    <i class="las la-trash" style="font-size:20px"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
                                     <tr>
-                                        <td>{{ $key + 1 }}</td>
-                                        <td>{{ $section->section_name }}</td>
-                                        <td>{{ $section->description }}</td>
-                                        <td>{{ $section->created_by }}</td>
-                                        <td class="d-flex align-items-center justify-center gap-3 ">
-
-                                            <a class="modal-effect btn mx-2 btn-outline-primary btn-sm "
-                                                data-effect="effect-scale" data-toggle="modal"
-                                                data-id="{{ $section->id }}"
-                                                data-section_name="{{ $section->section_name }}"
-                                                data-description="{{ $section->description }}" href="#modaldemo7">
-                                                <i class="las la-edit" style="font-size:20px "></i>
-                                            </a>
-                                            <a class="modal-effect btn mx-2 btn-sm btn-danger" data-effect="effect-scale"
-                                                data-id="{{ $section->id }}"
-                                                data-section_name="{{ $section->section_name }}"
-                                                data-description="{{ $section->description }}" data-toggle="modal"
-                                                href="#modaldemo6" title="تعديل"><i class="las la-trash"
-                                                    style="font-size:20px "></i>
-                                            </a>
-                                        </td>
+                                        <td colspan="4" class="text-center">لا يوجد اقسام</td>
                                     </tr>
-                                @endforeach
-
+                                @endif
                             </tbody>
+
                         </table>
                     </div>
                 </div>
@@ -122,13 +125,8 @@
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="section_name" class="control-label mb-1">اسم القسم</label>
-                                <input id="cc-pament" name="section_name" type="text" class="form-control"
+                                <input id="section_name" name="section_name" type="text" class="form-control"
                                     aria-required="true" aria-invalid="false">
-                            </div>
-                            <div class="form-group">
-                                <label for="description" class="control-label mb-1">ملاحظات</label>
-                                <textarea id="description" name="description" type="text" class="form-control"
-                                    aria-required="true" aria-invalid="false"></textarea>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -146,22 +144,18 @@
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
                         <h6 class="modal-title">تعديل قسم</h6>
-                        <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span
-                                aria-hidden="true">&times;</span></button>
+                        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <form action="{{ route('sections.update', $section->id) }}" method="post">
+                    <form action="" method="post" id="editForm">
                         @csrf
                         @method('PUT')
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="section_name" class="control-label mb-1">اسم القسم</label>
-                                <input id="section_name" data-section_name="{{ $section->section_name }}" value="{{ $section->section_name }}" name="section_name"
-                                    type="text" class="form-control" aria-required="true" aria-invalid="false">
-                            </div>
-                            <div class="form-group">
-                                <label for="description" class="control-label mb-1">ملاحظات</label>
-                                <textarea id="description" data-description="{{ $section->description }}" name="description"
-                                    type="text" class="form-control" aria-required="true" aria-invalid="false"></textarea>
+                                <input id="section_name" name="section_name" type="text" class="form-control"
+                                    aria-required="true" aria-invalid="false">
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -173,6 +167,7 @@
             </div>
         </div>
 
+
         {{-- Modal Edit --}}
         {{-- Modal Delete --}}
         <div class="modal" id="modaldemo6">
@@ -180,29 +175,31 @@
                 <div class="modal-content modal-content-demo">
                     <div class="modal-header">
                         <h6 class="modal-title">حذف قسم</h6>
-                        <button aria-label="Close" class="close" data-dismiss="modal" type="button"><span
-                                aria-hidden="true">&times;</span>
+                        <button aria-label="Close" class="close" data-dismiss="modal" type="button">
+                            <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form action="{{ route('sections.destroy', $section->id) }}" method="post">
+                    <form action="" method="post" id="deleteForm">
                         @csrf
                         @method('DELETE')
                         <div class="modal-body">
                             <div class="form-group">
+                                <input type="hidden" name="id" id="delete_id" value="">
+                                <h3>هل انت متاكد من الحذف</h3>
                                 <label for="section_name" class="control-label mb-1">اسم القسم</label>
-                                <input id="section_name" disabled name="section_name"
-                                    value="{{ $section->section_name }}" type="text" class="form-control"
-                                    aria-required="true" aria-invalid="false">
+                                <input id="delete_section_name" disabled name="section_name" type="text"
+                                    class="form-control" aria-required="true" aria-invalid="false">
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn ripple btn-success" type="button">تعديل وحفظ</button>
+                            <button type="submit" class="btn ripple btn-success" type="button">الحذف</button>
                             <button class="btn ripple btn-danger" data-dismiss="modal" type="button">الغاء</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
+
         {{-- Modal Delete --}}
 
     </div>
@@ -235,15 +232,31 @@
     <!-- Internal Modal js-->
     <script src="{{ URL::asset('assets/js/modal.js') }}"></script>
     <script>
+        // عند فتح مودال التعديل
         $('#modaldemo7').on('show.bs.modal', function(event) {
-            var button = $(event.relatedTarget)
-            var id = button.data('id')
-            var section_name = button.data('section_name')
-            var description = button.data('description')
-            var modal = $(this)
-            modal.find('.modal-body #id').val(id);
-            modal.find('.modal-body #section_name').val(section_name);
-            modal.find('.modal-body #description').val(description);
-        })
+            var button = $(event.relatedTarget); // الزر الذي فتح المودال
+            var id = button.data('id'); // جلب البيانات من الـ data-attributes
+            var section_name = button.data('section_name');
+
+            var modal = $(this);
+            modal.find('#section_name').val(section_name);
+
+            // تحديث رابط النموذج حسب القسم
+            $('#editForm').attr('action', '/sections/' + id);
+        });
+
+        // عند فتح مودال الحذف
+        $('#modaldemo6').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget); // الزر الذي فتح المودال
+            var id = button.data('id'); // جلب البيانات من الـ data-attributes
+            var section_name = button.data('section_name');
+
+            var modal = $(this);
+            modal.find('#delete_section_name').val(section_name);
+            modal.find('#delete_id').val(id);
+
+            // تحديث رابط النموذج حسب القسم
+            $('#deleteForm').attr('action', '/sections/' + id);
+        });
     </script>
 @endsection

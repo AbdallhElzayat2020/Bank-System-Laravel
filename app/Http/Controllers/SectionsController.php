@@ -31,7 +31,6 @@ class SectionsController extends Controller
         // Validate the request data.
         $vlidation = $request->validate([
             'section_name' => ['required', 'unique:sections', 'string', 'max:255'],
-            'description' => ['nullable'],
         ], [
             'section_name.required' => 'لا يمكن ترك حقل اسم القسم فارغا يرجي ادخال الاسم ',
             // 'section_name.unique' => 'اسم القسم موجود  بالفعل لا يمكن تكرارة',
@@ -41,7 +40,6 @@ class SectionsController extends Controller
         // Create a new section it to the database.
         $sections = Sections::create([
             'section_name' => $request->section_name,
-            'description' => $request->description,
             'created_by' => $user,
         ]);
         return redirect()->route('sections.index')->with('success', 'تم انشاء القسم بنجاح');
@@ -57,21 +55,26 @@ class SectionsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $section_exists = Sections::where('section_name', $request->section_name)->exists();
+        // تحقق من وجود القسم بنفس الاسم، مع استثناء الـ ID الحالي
+        $section_exists = Sections::where('section_name', $request->section_name)
+            ->where('id', '!=', $id)  // استثناء القسم الحالي
+            ->exists();
 
         if ($section_exists) {
-            return redirect()->route('sections.index')->with('error', 'اسم القسم موجود  بالفعل لا يمكن تكرارة');
+            return redirect()->route('sections.index')->with('error', 'اسم القسم موجود بالفعل لا يمكن تكراره');
         }
-        $vlidation = $request->validate([
-            'section_name' => ['required', 'unique:sections', 'string', 'max:255'],
-            'description' => ['nullable'],
+
+        // قواعد التحقق
+        $validation = $request->validate([
+            'section_name' => ['required', 'string', 'max:255', 'unique:sections,section_name,' . $id],
         ], [
-            'section_name.required' => 'لا يمكن ترك حقل اسم القسم فارغا يرجي ادخال الاسم ',
-            // 'section_name.unique' => 'اسم القسم موجود  بالفعل لا يمكن تكرارة',
+            'section_name.required' => 'لا يمكن ترك حقل اسم القسم فارغا يرجي ادخال الاسم',
         ]);
+
+        // جلب القسم وتحديثه
         $section = Sections::findOrFail($id);
-        // dd($request->all());
         $section->update($request->all());
+
         return redirect()->route('sections.index')->with('success', 'تم تعديل القسم بنجاح');
     }
 
