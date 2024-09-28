@@ -29,14 +29,12 @@
             <div class="card">
                 <div class="card-header pb-0">
                     <div class="d-flex justify-content-between">
-                        <h4 class="card-title mg-b-0">SIMPLE TABLE</h4>
-                        <i class="mdi mdi-dots-horizontal text-gray"></i>
+                        <a href="{{ route('invoices.create') }}" class="btn-btn-primary">اضافة فاتورة</a>
                     </div>
-                    <p class="tx-12 tx-gray-500 mb-2">Example of Valex Simple Table. <a href="">Learn more</a></p>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table text-md-nowrap" id="example1">
+                        <table data-page-length='50' class="table text-md-nowrap" id="example1">
                             <thead>
                                 <tr>
                                     <th class="wd-15p border-bottom-0">ID</th>
