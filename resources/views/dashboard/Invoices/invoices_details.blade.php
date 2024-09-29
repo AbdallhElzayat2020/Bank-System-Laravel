@@ -72,7 +72,6 @@
                                                             <th scope="row">الاجمالي مع الضريبة</th>
                                                             <td>{{ $invoices->Total }}</td>
                                                             <th scope="row">الحالة الحالية</th>
-
                                                             @if ($invoices->Value_Status == 1)
                                                                 <td><span
                                                                         class="badge badge-pill badge-success">{{ $invoices->Status }}</span>
@@ -137,7 +136,7 @@
                                                                     </td>
                                                                 @endif
                                                                 <td>{{ $x->Payment_Date }}</td>
-                                                                <td>{{ $x->note }}</td>
+                                                                <td>{{ $x->notes }}</td>
                                                                 <td>{{ $x->created_at }}</td>
                                                                 <td>{{ $x->user }}</td>
                                                             </tr>
@@ -156,7 +155,7 @@
                                                     <h5 class="card-title">اضافة مرفقات</h5>
                                                     <form method="post" action="{{ url('/InvoiceAttachments') }}"
                                                         enctype="multipart/form-data">
-                                                        {{ csrf_field() }}
+                                                        @csrf
                                                         <div class="custom-file">
                                                             <input type="file" class="custom-file-input" id="customFile"
                                                                 name="file_name" required>
@@ -196,7 +195,8 @@
                                                                     <td>{{ $attachment->created_at }}</td>
                                                                     <td colspan="2">
 
-                                                                        <a class="btn btn-outline-success btn-sm"
+                                                                        <a target="_blank"
+                                                                            class="btn btn-outline-success btn-sm"
                                                                             href="{{ url('View_file') }}/{{ $invoices->invoice_number }}/{{ $attachment->file_name }}"
                                                                             role="button"><i class="fas fa-eye"></i>&nbsp;
                                                                             عرض</a>

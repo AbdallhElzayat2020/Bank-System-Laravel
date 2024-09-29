@@ -39,9 +39,11 @@ Route::resource('/products', ProductsController::class);
 
 Route::resource('/invoices', InvoicesController::class);
 
-Route::get('/invoices-details/{id}', [InvoicesDetailsController::class,'index']);
+Route::get('/invoices-details/{id}', [InvoicesDetailsController::class, 'index']);
 
+Route::get('View_file/{invoice_number}/{file_name}', [InvoicesDetailsController::class, 'open_file']);
 
+Route::get('download/{invoice_number}/{file_name}', [InvoicesDetailsController::class, 'get_file']);
 
 require __DIR__ . '/auth.php';
 
