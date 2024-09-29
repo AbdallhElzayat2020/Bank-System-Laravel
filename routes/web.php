@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\InvoicesController;
+use App\Http\Controllers\InvoicesDetailsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\SectionsController;
 use Illuminate\Support\Facades\Route;
@@ -29,11 +30,18 @@ Route::get('/dashboard', function () {
 
 
 
-Route::resource('/invoices', InvoicesController::class);
 
 Route::resource('/sections', SectionsController::class);
 
+Route::get('section/{id}', [InvoicesController::class, 'getProduct']);
+
 Route::resource('/products', ProductsController::class);
+
+Route::resource('/invoices', InvoicesController::class);
+
+Route::get('/invoices-details/{id}', [InvoicesDetailsController::class,'index']);
+
+
 
 require __DIR__ . '/auth.php';
 

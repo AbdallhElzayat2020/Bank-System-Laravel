@@ -23,13 +23,41 @@
     <!-- breadcrumb -->
 @endsection
 @section('content')
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    @if (session()->has('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session()->get('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+    @if (session()->has('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session()->get('error') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+
     <!-- row -->
     <div class="row">
         <div class="col-xl-12">
             <div class="card">
                 <div class="card-header pb-0">
                     <div class="d-flex justify-content-between">
-                        <a href="{{ route('invoices.create') }}" class="btn-btn-primary">اضافة فاتورة</a>
+                        <a href="{{ route('invoices.create') }}" class="modal-effect btn btn-sm btn-primary"
+                            style="color:white"><i class="fas fa-plus"></i>&nbsp; اضافة فاتورة
+                        </a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -49,23 +77,50 @@
                                     <th class="wd-25p border-bottom-0">الاجمالي</th>
                                     <th class="wd-25p border-bottom-0">الحالة</th>
                                     <th class="wd-25p border-bottom-0">ملاحظات</th>
+                                    <th class="wd-25p border-bottom-0">العمليات</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Bella</td>
-                                    <td>Chloe</td>
-                                    <td>System Developer</td>
-                                    <td>2018/03/12</td>
-                                    <td>$654,765</td>
-                                    <td>b.Chloe@datatables.net</td>
-                                    <td>Bella</td>
-                                    <td>Chloe</td>
-                                    <td>System Developer</td>
-                                    <td>2018/03/12</td>
-                                    <td>$654,765</td>
-                                    <td>b.Chloe@datatables.net</td>
-                                </tr>
+                                @if (isset($invoices) && $invoices->count() > 0)
+                                    @foreach ($invoices as $key => $invoice)
+                                        <tr>
+                                            <td>{{ $key + 1 }}</td>
+                                            <td>{{ $invoice->invoice_number }}</td>
+                                            <td>{{ $invoice->invoice_Date }}</td>
+                                            <td>{{ $invoice->Due_date }}</td>
+                                            <td>{{ $invoice->product }}</td>
+                                            <td>
+                                                <a href="{{ url('invoices-details') }}/{{ $invoice->id }}">
+                                                    {{ $invoice->section->section_name }}
+                                                </a>
+                                            </td>
+                                            <td>{{ $invoice->Discount }}</td>
+                                            <td>{{ $invoice->Rate_VAT }}</td>
+                                            <td>{{ $invoice->Value_VAT }}</td>
+                                            <td>{{ $invoice->Total }}</td>
+                                            <td>
+                                                @if ($invoice->Value_Status == 1)
+                                                    <span class="text-success">{{ $invoice->Status }}</span>
+                                                @elseif($invoice->Value_Status == 2)
+                                                    <span class="text-danger">{{ $invoice->Status }}</span>
+                                                @else
+                                                    <span class="text-warning">{{ $invoice->Status }}</span>
+                                                @endif
+
+                                            </td>
+                                            <td>{{ $invoice->note }}</td>
+                                            <td class="d-flex align-items-center justify-center gap-3 ">
+                                                <a class="btn mx-2 btn-sm btn-primary" href="">تعديل</a>
+                                                <a class="btn mx-2 btn-sm btn-danger" href="">حذف</a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr colspan="4" class="text-center">
+                                        <td>لا يوجد فواتير</td>
+                                    </tr>
+                                @endif
+
                             </tbody>
                         </table>
                     </div>
