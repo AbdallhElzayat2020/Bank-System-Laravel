@@ -24,7 +24,7 @@ class InvoicesDetailsController extends Controller
     }
     public function get_file($invoice_number, $file_name)
     {
-        $contents = Storage::disk('public_uploads')->get($invoice_number . '/' . $file_name);
+        Storage::disk('public_uploads')->get($invoice_number . '/' . $file_name);
         if (Storage::disk('public_uploads')->exists($invoice_number . '/' . $file_name)) {
             return response()->download(Storage::disk('public_uploads')->path($invoice_number . '/' . $file_name));
         } else {
@@ -40,51 +40,11 @@ class InvoicesDetailsController extends Controller
         return response()->file($files);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function destroy(Request $request)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Invoices_details $invoices_details)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Invoices_details $invoices_details)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Invoices_details $invoices_details)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Invoices_details $invoices_details)
-    {
-        //
+        $invoices = Invoices_attachment::findOrFail($request->id_file);
+        $invoices->delete();
+        Storage::disk('public_uploads')->delete($request->invoice_number . '/' . $request->file_name);
+        return redirect()->back()->with('success', 'تم حذف الملف بنجاح');
     }
 }

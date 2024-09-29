@@ -15,6 +15,32 @@
     <!-- breadcrumb -->
 @endsection
 @section('content')
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    @if (session()->has('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session()->get('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+    @if (session()->has('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session()->get('error') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
     <!-- row -->
     <div class="row">
         <div class="col-xl-12">
@@ -198,7 +224,8 @@
                                                                         <a target="_blank"
                                                                             class="btn btn-outline-success btn-sm"
                                                                             href="{{ url('View_file') }}/{{ $invoices->invoice_number }}/{{ $attachment->file_name }}"
-                                                                            role="button"><i class="fas fa-eye"></i>&nbsp;
+                                                                            role="button"><i
+                                                                                class="fas fa-eye"></i>&nbsp;
                                                                             عرض</a>
 
                                                                         <a class="btn btn-outline-info btn-sm"
@@ -211,7 +238,8 @@
                                                                             data-file_name="{{ $attachment->file_name }}"
                                                                             data-invoice_number="{{ $attachment->invoice_number }}"
                                                                             data-id_file="{{ $attachment->id }}"
-                                                                            data-target="#delete_file">حذف</button>
+                                                                            data-target="#delete_file">حذف
+                                                                        </button>
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
@@ -230,6 +258,39 @@
             </div>
             <!-- /div -->
         </div>
+
+        <!-- delete -->
+        <div class="modal fade" id="delete_file" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">حذف المرفق</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <form action="{{ route('delete_file') }}" method="post">
+
+                        @csrf
+                        <div class="modal-body">
+                            <p class="text-center">
+                            <h6 style="color:red"> هل انت متاكد من عملية حذف المرفق ؟</h6>
+                            </p>
+
+                            <input type="hidden" name="id_file" id="id_file" value="">
+                            <input type="hidden" name="file_name" id="file_name" value="">
+                            <input type="hidden" name="invoice_number" id="invoice_number" value="">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">الغاء</button>
+                            <button type="submit" class="btn btn-danger">تاكيد</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- row closed -->
     </div>
@@ -238,4 +299,27 @@
     <!-- main-content closed -->
 @endsection
 @section('js')
+
+    <script>
+        $('#delete_file').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget)
+            var id_file = button.data('id_file')
+            var file_name = button.data('file_name')
+            var invoice_number = button.data('invoice_number')
+            var modal = $(this)
+
+            modal.find('.modal-body #id_file').val(id_file);
+            modal.find('.modal-body #file_name').val(file_name);
+            modal.find('.modal-body #invoice_number').val(invoice_number);
+        })
+    </script>
+
+    {{-- <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script> --}}
+
 @endsection

@@ -42,8 +42,8 @@ class InvoicesController extends Controller
         // dd($request->all());
         $request->validate([
             'invoice_number' => 'required',
-            'invoice_Date' => 'required',
-            'Due_date' => 'required',
+            'invoice_Date' => 'required|date',
+            'Due_date' => 'required|date|after_or_equal:invoice_Date',
             'product' => 'required',
             'Amount_collection' => 'required',
             'Amount_Commission' => 'required',
@@ -51,7 +51,14 @@ class InvoicesController extends Controller
             'Value_VAT' => 'required',
             'Rate_VAT' => 'required',
             'Total' => 'required',
-            'note' => 'required',
+            'note' => 'nullable',
+        ], [
+            'invoice_number.required' => 'رقم الفاتورة مطلوب',
+            'invoice_Date.required' => 'تاريخ الفاتورة مطلوب',
+            'Due_date.required' => 'تاريخ الاستحقاق مطلوب',
+            'Due_date.date' => 'تاريخ الاستحقاق يجب أن يكون تاريخًا',
+            'Due_date.after_or_equal' => 'تاريخ الاستحقاق يجب أن يكون في نفس اليوم أو بعد تاريخ الفاتورة.',
+
         ]);
 
 
