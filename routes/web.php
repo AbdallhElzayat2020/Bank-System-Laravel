@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\InvoicesAttachmentController;
 use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\InvoicesDetailsController;
 use App\Http\Controllers\ProductsController;
@@ -38,6 +39,10 @@ Route::get('section/{id}', [InvoicesController::class, 'getProduct']);
 Route::resource('/products', ProductsController::class);
 
 Route::resource('/invoices', InvoicesController::class);
+
+Route::get('/edit_invoice/{id}', [InvoicesController::class, 'edit']);
+
+Route::resource('/InvoiceAttachments', InvoicesAttachmentController::class);
 
 Route::get('/invoices-details/{id}', [InvoicesDetailsController::class, 'index']);
 

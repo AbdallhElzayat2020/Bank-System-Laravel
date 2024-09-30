@@ -62,7 +62,7 @@ class InvoicesController extends Controller
         ]);
 
 
-        invoices::create([
+        Invoices::create([
             'invoice_number' => $request->invoice_number,
             'invoice_Date' => $request->invoice_Date,
             'Due_date' => $request->Due_date,
@@ -80,9 +80,9 @@ class InvoicesController extends Controller
         ]);
 
         $user = Auth::user()->name;
-        $invoice_id = invoices::latest()->first()->id;
+        $invoice_id = Invoices::latest()->first()->id;
 
-        invoices_details::create([
+        Invoices_details::create([
             'id_Invoice' => $invoice_id,
             'invoice_number' => $request->invoice_number,
             'product' => $request->product,
@@ -118,25 +118,18 @@ class InvoicesController extends Controller
 
         // $user = User::get();
         // $invoices = invoices::latest()->first();
-
-
         return redirect()->route('invoices.index')->with('success', 'تم اضافة الفاتورة بنجاح');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Invoices $invoices)
-    {
-        //
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Invoices $invoices)
+
+    public function edit(Request $request)
     {
-        //
+        $invoice = Invoices::where('id', $request->id)->first();
+        $sections = Sections::all();
+        return view('Dashboard.Invoices.edit_invoices', compact('invoice', 'sections'));
     }
 
     /**
@@ -144,7 +137,44 @@ class InvoicesController extends Controller
      */
     public function update(Request $request, Invoices $invoices)
     {
-        //
+        $request->validate([
+            'invoice_number' => 'required',
+            'invoice_Date' => 'required|date',
+            'Due_date' => 'required|date|after_or_equal:invoice_Date',
+            'product' => 'required',
+            'Amount_collection' => 'required',
+            'Amount_Commission' => 'required',
+            'Discount' => 'required',
+            'Value_VAT' => 'required',
+            'Rate_VAT' => 'required',
+            'Total' => 'required',
+            'note' => 'nullable',
+        ], [
+            'invoice_number.required' => 'لا يمكن رتك رقم الفاتورة فارغا',
+            'invoice_Date.required' => 'لا يمكن ترك تاريخ الفاتورة فارغا',
+            'Due_date.required' => 'لا يمكن ترك تاريخ الاستحقاق فارغا',
+            'Due_date.date' => 'تاريخ الاستحقاق يجب أن يكون تاريخًا',
+            'Due_date.after_or_equal' => 'تاريخ الاستحقاق يجب أن يكون في نفس اليوم أو بعد تاريخ الفاتورة.',
+        ]);
+
+        $invoices = Invoices::findOrFail($request->invoice_id);
+
+
+        $invoices->update([
+            'invoice_number' => $request->invoice_number,
+            'invoice_Date' => $request->invoice_Date,
+            'Due_date' => $request->Due_date,
+            'product' => $request->product,
+            'section_id' => $request->Section,
+            'Amount_collection' => $request->Amount_collection,
+            'Amount_Commission' => $request->Amount_Commission,
+            'Discount' => $request->Discount,
+            'Value_VAT' => $request->Value_VAT,
+            'Rate_VAT' => $request->Rate_VAT,
+            'note' => $request->note,
+            'Total' => $request->Total,
+        ]);
+        return redirect()->route('invoices.index')->with('success', 'تم تعديل الفاتورة بنجاح');
     }
 
     /**

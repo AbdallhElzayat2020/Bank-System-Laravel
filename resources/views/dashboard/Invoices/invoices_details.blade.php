@@ -140,11 +140,9 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <?php $i = 0; ?>
-                                                        @foreach ($details as $x)
-                                                            <?php $i++; ?>
+                                                        @foreach ($details as $key => $x)
                                                             <tr>
-                                                                <td>{{ $i }}</td>
+                                                                <td>{{ $key }}</td>
                                                                 <td>{{ $x->invoice_number }}</td>
                                                                 <td>{{ $x->product }}</td>
                                                                 <td>{{ $invoices->Section->section_name }}</td>
@@ -171,8 +169,6 @@
                                                 </table>
                                             </div>
                                         </div>
-
-
                                         <div class="tab-pane" id="tab6">
                                             <!--المرفقات-->
                                             <div class="card card-statistics">
@@ -211,11 +207,10 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <?php $i = 0; ?>
-                                                            @foreach ($attachments as $attachment)
-                                                                <?php $i++; ?>
+
+                                                            @foreach ($attachments as $key => $attachment)
                                                                 <tr>
-                                                                    <td>{{ $i }}</td>
+                                                                    <td>{{ $key + 1 }}</td>
                                                                     <td>{{ $attachment->file_name }}</td>
                                                                     <td>{{ $attachment->Created_by }}</td>
                                                                     <td>{{ $attachment->created_at }}</td>
@@ -314,12 +309,12 @@
         })
     </script>
 
-    {{-- <script>
+    <script>
         // Add the following code if you want the name of the file appear on select
         $(".custom-file-input").on("change", function() {
             var fileName = $(this).val().split("\\").pop();
             $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });
-    </script> --}}
+    </script>
 
 @endsection

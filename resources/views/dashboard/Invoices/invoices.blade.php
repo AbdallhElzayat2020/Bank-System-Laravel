@@ -100,18 +100,54 @@
                                             <td>{{ $invoice->Total }}</td>
                                             <td>
                                                 @if ($invoice->Value_Status == 1)
-                                                    <span class="badge badge-pill badge-success">{{ $invoice->Status }}</span>
+                                                    <span
+                                                        class="badge badge-pill badge-success">{{ $invoice->Status }}</span>
                                                 @elseif($invoice->Value_Status == 2)
-                                                    <span class="badge badge-pill badge-danger">{{ $invoice->Status }}</span>
+                                                    <span
+                                                        class="badge badge-pill badge-danger">{{ $invoice->Status }}</span>
                                                 @else
-                                                    <span class="badge badge-pill badge-warning">{{ $invoice->Status }}</span>
+                                                    <span
+                                                        class="badge badge-pill badge-warning">{{ $invoice->Status }}</span>
                                                 @endif
 
                                             </td>
                                             <td>{{ $invoice->note }}</td>
                                             <td class="d-flex align-items-center justify-center gap-3 ">
-                                                <a class="btn mx-2 btn-sm btn-primary" href="">تعديل</a>
-                                                <a class="btn mx-2 btn-sm btn-danger" href="">حذف</a>
+                                                <div class="dropdown">
+                                                    <button aria-expanded="false" aria-haspopup="true"
+                                                        class="btn ripple btn-primary btn-sm" data-toggle="dropdown"
+                                                        type="button">العمليات<i
+                                                            class="fas fa-caret-down ml-1"></i></button>
+                                                    <div class="dropdown-menu tx-13">
+                                                        <a class="dropdown-item"
+                                                            href=" {{ url('edit_invoice') }}/{{ $invoice->id }}">تعديل الفاتورة
+                                                        </a>
+                                                        {{-- <a class="dropdown-item" href="#"
+                                                            data-invoice_id="{{ $invoice->id }}" data-toggle="modal"
+                                                            data-target="#delete_invoice"><i
+                                                                class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;حذف
+                                                            الفاتورة
+                                                        </a>
+                                                        <a class="dropdown-item"
+                                                            href="{{ URL::route('Status_show', [$invoice->id]) }}"><i
+                                                                class=" text-success fas                                                                                                                                                                                                                                                                                                                                                                                              fa-money-bill"></i>&nbsp;&nbsp;تغير
+                                                            حالة
+                                                            الدفع
+                                                        </a>
+                                                        <a class="dropdown-item" href="#"
+                                                            data-invoice_id="{{ $invoice->id }}" data-toggle="modal"
+                                                            data-target="#Transfer_invoice"><i
+                                                                class="text-warning fas fa-exchange-alt"></i>&nbsp;&nbsp;نقل
+                                                            الي
+                                                            الارشيف
+                                                        </a>
+                                                        <a class="dropdown-item"
+                                                            href="Print_invoice/{{ $invoice->id }}"><i
+                                                                class="text-success fas fa-print"></i>&nbsp;&nbsp;طباعة
+                                                            الفاتورة
+                                                        </a> --}}
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach

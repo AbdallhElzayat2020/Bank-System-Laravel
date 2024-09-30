@@ -15,8 +15,8 @@ class InvoicesDetailsController extends Controller
      */
     public function index($id)
     {
-        $invoices = invoices::where('id', $id)->first();
-        $details = invoices_Details::where('id_Invoice', $id)->get();
+        $invoices = Invoices::where('id', $id)->first();
+        $details = Invoices_details::where('id_Invoice', $id)->get();
         $attachments = Invoices_attachment::where('invoice_id', $id)->get();
 
         // dd($invoices_details);
@@ -31,7 +31,6 @@ class InvoicesDetailsController extends Controller
             abort(404);
         }
     }
-
 
 
     public function open_file($invoice_number, $file_name)
