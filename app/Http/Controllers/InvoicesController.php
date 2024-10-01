@@ -9,6 +9,8 @@ use App\Models\Sections;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+// use Illuminate\Support\Facades\Storage as FacadesStorage;
 
 class InvoicesController extends Controller
 {
@@ -180,8 +182,26 @@ class InvoicesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Invoices $invoices)
+    public function destroy(Request $request)
     {
-        //
+
+        $id = $request->invoice_id;
+
+        // البحث عن الفاتورة باستخدام الـ invoice_id
+        $invoice = Invoices::findOrFail($id);
+
+        // الحصول على رقم الفاتورة
+        $invoiceNumber = $invoice->invoice_number;
+
+        // التحقق من وجود فولدر للمرفقات برقم الفاتورة وحذفه
+        if (Storage::disk('public_uploads')->exists($invoiceNumber)) {
+            // حذف المجلد الذي يحتوي على المرفقات برقم الفاتورة
+            Storage::disk('public_uploads')->deleteDirectory($invoiceNumber);
+        }
+
+        // حذف الفاتورة بشكل نهائي
+        $invoice->forceDelete();
+
+        return redirect()->route('invoices.index')->with('success', 'تم حذف الفاتورة بنجاح');
     }
 }

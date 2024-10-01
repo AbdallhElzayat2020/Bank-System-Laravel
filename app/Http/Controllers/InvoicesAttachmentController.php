@@ -43,7 +43,6 @@ class InvoicesAttachmentController extends Controller
         $user = Auth::user()->name;
 
 
-
         $attachments = new Invoices_attachment();
 
         $attachments->file_name = $file_name;
@@ -55,7 +54,6 @@ class InvoicesAttachmentController extends Controller
         $attachments->Created_by = $user;
 
         $attachments->save();
-
 
         // move img attchment into Attachments folder
         $imageName = $request->file('file_name')->getClientOriginalName();
