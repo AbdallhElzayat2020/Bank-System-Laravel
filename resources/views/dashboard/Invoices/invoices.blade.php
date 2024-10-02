@@ -132,13 +132,14 @@
                                                                 class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;
                                                             حذف الفاتورة
                                                         </a>
-                                                        {{--
+
                                                         <a class="dropdown-item"
-                                                            href="{{ URL::route('Status_show', [$invoice->id]) }}"><i
+                                                            href="{{ URL::route('change_status', $invoice->id) }}"><i
                                                                 class=" text-success fas                                                                                                                                                                                                                                                                                                                                                                                              fa-money-bill"></i>&nbsp;&nbsp;تغير
-                                                            حالة
-                                                            الدفع
+                                                            حالة الدفع
+
                                                         </a>
+                                                        {{--
                                                         <a class="dropdown-item" href="#"
                                                             data-invoice_id="{{ $invoice->id }}" data-toggle="modal"
                                                             data-target="#Transfer_invoice"><i
@@ -156,10 +157,10 @@
                                             </td>
                                         </tr>
                                     @endforeach
-                                @else
+                                    {{-- @else
                                     <tr colspan="12" class="text-center d-flex align-items-center justify-content-center">
                                         <td class="d-flex align-items-center justify-content-center">لا يوجد فواتير</td>
-                                    </tr>
+                                    </tr> --}}
                                 @endif
 
                             </tbody>

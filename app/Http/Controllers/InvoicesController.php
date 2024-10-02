@@ -113,25 +113,71 @@ class InvoicesController extends Controller
             $imageName = $request->pic->getClientOriginalName();
             $request->pic->move(public_path('Attachments/' . $invoice_number), $imageName);
         }
-
-
-        // $user = User::first();
-        // Notification::send($user, new AddInvoice($invoice_id));
-
-        // $user = User::get();
-        // $invoices = invoices::latest()->first();
         return redirect()->route('invoices.index')->with('success', 'تم اضافة الفاتورة بنجاح');
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
 
     public function edit(Request $request)
     {
         $invoice = Invoices::where('id', $request->id)->first();
         $sections = Sections::all();
         return view('Dashboard.Invoices.edit_invoices', compact('invoice', 'sections'));
+    }
+    public function change_status(Request $request)
+    {
+        $invoice = Invoices::where('id', $request->id)->first();
+        $sections = Sections::all();
+        return view('Dashboard.Invoices.change_status', compact('invoice', 'sections'));
+    }
+    public function status_update(Request $request, $id)
+    {
+        $request->validate([
+            'Status' => 'required',
+            'Payment_Date' => 'required',
+        ], [
+            'Status.required' => 'حقل الحالة مطلوب',
+            'Payment_Date.required' => 'حقل تاريخ الدفع مطلوب',
+        ]);
+
+        $invoice = Invoices::findOrFail($id);
+
+        $user = Auth::user()->name;
+
+        if ($request->Status === 'مدفوعة') {
+            $invoice->update([
+                'Value_Status' => 1,
+                'Status' => $request->Status,
+            ]);
+
+            Invoices_details::create([
+                'id_Invoice' => $request->invoice_id,
+                'invoice_number' => $request->invoice_number,
+                'product' => $request->product,
+                'Section' => $request->Section,
+                'Status' => $request->Status,
+                'Value_Status' => 1,
+                'notes' => $request->notes,
+                'Payment_Date' => $request->Payment_Date,
+                'user' => $user,
+            ]);
+        } else {
+            $invoice->update([
+                'Value_Status' => 3,
+                'Status' => $request->Status,
+                'Payment_Date' => $request->Payment_Date,
+            ]);
+            Invoices_details::create([
+                'id_Invoice' => $request->invoice_id,
+                'invoice_number' => $request->invoice_number,
+                'product' => $request->product,
+                'Section' => $request->Section,
+                'Status' => $request->Status,
+                'Value_Status' => 3,
+                'notes' => $request->notes,
+                'Payment_Date' => $request->Payment_Date,
+                'user' => $user,
+            ]);
+        }
+        return redirect()->route('invoices.index')->with('success', 'تم تحديث حالة الدفع بنجاح ');
     }
 
     /**

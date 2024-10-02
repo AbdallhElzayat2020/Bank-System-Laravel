@@ -139,7 +139,7 @@
 
                             <div class="col">
                                 <label for="inputName" class="control-label">نسبة ضريبة القيمة المضافة</label>
-                                <select @selected($invoice->Rate_VAT) name="Rate_VAT" id="Rate_VAT" class="form-control"
+                                <select  name="Rate_VAT" id="Rate_VAT" class="form-control"
                                     onchange="myFunction()">
                                     <!--placeholder-->
                                     <option value="{{ $invoice->Rate_VAT }}" selected>{{ $invoice->Rate_VAT }}</option>
