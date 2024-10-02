@@ -6,9 +6,12 @@ use App\Models\Invoices;
 use App\Models\Invoices_attachment;
 use App\Models\Invoices_details;
 use App\Models\Sections;
+use App\Models\User;
+use App\Notifications\AddInvoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 // use Illuminate\Support\Facades\Storage as FacadesStorage;
 
@@ -113,6 +116,11 @@ class InvoicesController extends Controller
             $imageName = $request->pic->getClientOriginalName();
             $request->pic->move(public_path('Attachments/' . $invoice_number), $imageName);
         }
+
+        $user = User::first();
+        // $user->notify(new AddInvoice($invoice_id));
+        Notification::send($user, new AddInvoice($invoice_id));
+
         return redirect()->route('invoices.index')->with('success', 'تم اضافة الفاتورة بنجاح');
     }
 
