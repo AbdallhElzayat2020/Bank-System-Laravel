@@ -225,29 +225,86 @@ class InvoicesController extends Controller
         return redirect()->route('invoices.index')->with('success', 'تم تعديل الفاتورة بنجاح');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+
+    public function invoice_paid()
+    {
+        $invoices = Invoices::where('Value_Status', 1)->get();
+
+        return view('Dashboard.Invoices.invoices_paid', compact('invoices'));
+    }
+    public function invoice_unpaid()
+    {
+        $invoices = Invoices::where('Value_Status', 2)->get();
+
+        return view('Dashboard.Invoices.invoices_paid', compact('invoices'));
+    }
+    public function invoice_partial()
+    {
+        $invoices = Invoices::where('Value_Status', 3)->get();
+
+        return view('Dashboard.Invoices.invoices_paid', compact('invoices'));
+    }
+
     public function destroy(Request $request)
     {
 
         $id = $request->invoice_id;
 
+        $id_page = $request->id_page;
         // البحث عن الفاتورة باستخدام الـ invoice_id
         $invoice = Invoices::findOrFail($id);
 
         // الحصول على رقم الفاتورة
         $invoiceNumber = $invoice->invoice_number;
+        if (!$id_page == 2) {
+            // التحقق من وجود فولدر للمرفقات برقم الفاتورة وحذفه
+            if (Storage::disk('public_uploads')->exists($invoiceNumber)) {
+                // حذف المجلد الذي يحتوي على المرفقات برقم الفاتورة
+                Storage::disk('public_uploads')->deleteDirectory($invoiceNumber);
+            }
 
-        // التحقق من وجود فولدر للمرفقات برقم الفاتورة وحذفه
-        if (Storage::disk('public_uploads')->exists($invoiceNumber)) {
-            // حذف المجلد الذي يحتوي على المرفقات برقم الفاتورة
-            Storage::disk('public_uploads')->deleteDirectory($invoiceNumber);
+            // حذف الفاتورة بشكل نهائي
+            $invoice->forceDelete();
+
+            return redirect()->route('invoices.index')->with('success', 'تم حذف الفاتورة بنجاح');
+        } else {
+
+            $invoice->delete();
+
+            return redirect()->route('archive_invoices.index')->with('success', 'تم الارشفة الفاتورة بنجاح');
         }
 
-        // حذف الفاتورة بشكل نهائي
-        $invoice->forceDelete();
-
-        return redirect()->route('invoices.index')->with('success', 'تم حذف الفاتورة بنجاح');
     }
+    // public function destroy(Request $request)
+    // {
+
+    //     $id = $request->invoice_id;
+
+    //     $id_page = $request->id_page;
+
+    //     // البحث عن الفاتورة باستخدام الـ invoice_id
+    //     $invoice = Invoices::findOrFail($id);
+
+    //     // الحصول على رقم الفاتورة
+    //     $invoiceNumber = $invoice->invoice_number;
+
+    //     if (!$id_page == 2) {
+    //         // التحقق من وجود فولدر للمرفقات برقم الفاتورة وحذفه
+    //         if (Storage::disk('public_uploads')->exists($invoiceNumber)) {
+    //             // حذف المجلد الذي يحتوي على المرفقات برقم الفاتورة
+    //             Storage::disk('public_uploads')->deleteDirectory($invoiceNumber);
+    //         }
+    //         // حذف الفاتورة بشكل نهائي
+    //         $invoice->forceDelete();
+
+    //         // return redirect()->route('archive_invoices')->with('success', 'تم ارشفة الفاتورة بنجاح');
+    //         return redirect()->route('invoices.index')->with('success', 'تم حذف الفاتورة بنجاح');
+
+    //     } else {
+    //         $invoice->delete();
+
+    //         return redirect()->route('archive_invoices')->with('success', 'تم ارشفة الفاتورة بنجاح');
+    //     }
+
+    // }
 }

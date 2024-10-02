@@ -26,7 +26,7 @@
 
                         <h4 class="font-weight-semibold mt-3 mb-0"{{ Auth::user()->name }}</h4>
                             <span class="mb-0 text-muted">{{ Auth::user()->email }}</span>
-                    @endauth
+                        @endauth
                 </div>
             </div>
         </div>
@@ -52,11 +52,21 @@
                     </svg><span class="side-menu__label">الفواتير</span><i class="angle fe fe-chevron-down"></i></a>
                 <ul class="slide-menu">
                     <li><a class="slide-item" href="{{ url('/' . ($page = 'invoices')) }}">قائمة الفواتير</a></li>
-                    <li><a class="slide-item" href="{{ url('/' . ($page = 'chart-flot')) }}">الفواتير المدفوعة</a></li>
-                    <li><a class="slide-item" href="{{ url('/' . ($page = 'chart-chartjs')) }}">الفواتير الغير
-                            مدفوعة</a></li>
-                    <li><a class="slide-item" href="{{ url('/' . ($page = 'chart-echart')) }}">الفواتير المدفوعة
-                            جزئيا</a></li>
+                    <li><a class="slide-item" href="{{ url('/' . ($page = 'invoice_paid')) }}">الفواتير المدفوعة</a>
+                    </li>
+                    <li><a class="slide-item" href="{{ url('/' . ($page = 'invoice_unpaid')) }}">الفواتير الغير
+                            مدفوعة</a>
+                    </li>
+                    <li>
+                        <a class="slide-item" href="{{ url('/' . ($page = 'invoice_partial')) }}">الفواتير المدفوعة
+                            جزئيا
+                        </a>
+                    </li>
+                    <li>
+                        <a class="slide-item" href="{{ url('/' . ($page = 'archive_invoices')) }}">
+                            ارشيف الفواتير
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li class="side-item side-item-category">التقارير</li>

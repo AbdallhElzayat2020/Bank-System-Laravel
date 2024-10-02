@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\InvoiceAchiveController;
 use App\Http\Controllers\InvoicesAttachmentController;
 use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\InvoicesDetailsController;
@@ -47,6 +48,7 @@ Route::resource('/InvoiceAttachments', InvoicesAttachmentController::class);
 Route::get('/invoices-details/{id}', [InvoicesDetailsController::class, 'index']);
 
 Route::get('/change_status/{id}', [InvoicesController::class, 'change_status'])->name('change_status');
+
 Route::post('/status_update/{id}', [InvoicesController::class, 'status_update'])->name('status_update');
 
 Route::get('View_file/{invoice_number}/{file_name}', [InvoicesDetailsController::class, 'open_file']);
@@ -54,6 +56,15 @@ Route::get('View_file/{invoice_number}/{file_name}', [InvoicesDetailsController:
 Route::get('download/{invoice_number}/{file_name}', [InvoicesDetailsController::class, 'get_file']);
 
 Route::post('/delete_file', [InvoicesDetailsController::class, 'destroy'])->name('delete_file');
+
+
+Route::get('invoice_paid', [InvoicesController::class, 'invoice_paid'])->name('invoice_paid');
+
+Route::get('invoice_unpaid', [InvoicesController::class, 'invoice_unpaid'])->name('invoice_unpaid');
+
+Route::get('invoice_partial', [InvoicesController::class, 'invoice_partial'])->name('invoice_partial');
+
+Route::resource('archive_invoices', InvoiceAchiveController::class);
 
 require __DIR__ . '/auth.php';
 
