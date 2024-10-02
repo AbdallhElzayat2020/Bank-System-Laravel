@@ -64,6 +64,8 @@ Route::get('invoice_unpaid', [InvoicesController::class, 'invoice_unpaid'])->nam
 
 Route::get('invoice_partial', [InvoicesController::class, 'invoice_partial'])->name('invoice_partial');
 
+Route::get('Print_invoice/{id}', [InvoicesController::class, 'Print_invoice'])->name('Print_invoice');
+
 Route::resource('archive_invoices', InvoiceAchiveController::class);
 
 require __DIR__ . '/auth.php';
