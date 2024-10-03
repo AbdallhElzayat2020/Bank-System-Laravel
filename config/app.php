@@ -186,6 +186,9 @@ return [
         // excel
         Maatwebsite\Excel\ExcelServiceProvider::class,
 
+        // permission
+        Spatie\Permission\PermissionServiceProvider::class,
+
         /*
          * Package Service Providers...
          */

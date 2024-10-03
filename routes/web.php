@@ -6,7 +6,9 @@ use App\Http\Controllers\InvoicesAttachmentController;
 use App\Http\Controllers\InvoicesController;
 use App\Http\Controllers\InvoicesDetailsController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SectionsController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -70,6 +72,15 @@ Route::resource('archive_invoices', InvoiceAchiveController::class);
 
 Route::get('export_invoices', [InvoicesController::class, 'export']);
 
+
+
+Route::group(['middleware' => ['auth']], function() {
+
+    Route::resource('roles', RoleController::class);
+
+    Route::resource('users', UserController::class);
+
+});
 
 
 require __DIR__ . '/auth.php';
