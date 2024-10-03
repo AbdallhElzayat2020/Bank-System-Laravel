@@ -68,6 +68,10 @@ Route::get('Print_invoice/{id}', [InvoicesController::class, 'Print_invoice'])->
 
 Route::resource('archive_invoices', InvoiceAchiveController::class);
 
+Route::get('export_invoices', [InvoicesController::class, 'export']);
+
+
+
 require __DIR__ . '/auth.php';
 
 Route::get('/{page}', [AdminController::class, 'index']);

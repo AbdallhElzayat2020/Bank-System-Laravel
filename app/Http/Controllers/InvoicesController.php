@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\InvoicesExport;
 use App\Models\Invoices;
 use App\Models\Invoices_attachment;
 use App\Models\Invoices_details;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 // use Illuminate\Support\Facades\Storage as FacadesStorage;
 
 class InvoicesController extends Controller
@@ -123,7 +125,11 @@ class InvoicesController extends Controller
 
         return redirect()->route('invoices.index')->with('success', 'تم اضافة الفاتورة بنجاح');
     }
-
+    // export excel
+    public function export()
+    {
+        return Excel::download(new InvoicesExport, 'invoices.xlsx');
+    }
     public function edit(Request $request)
     {
         $invoice = Invoices::where('id', $request->id)->first();

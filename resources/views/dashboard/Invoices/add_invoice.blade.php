@@ -64,14 +64,12 @@
                         autocomplete="off">
                         @csrf
                         {{-- 1 --}}
-
                         <div class="row">
                             <div class="col">
                                 <label for="inputName" class="control-label">رقم الفاتورة</label>
                                 <input type="text" value="{{ old('invoice_number') }}" class="form-control"
                                     id="inputName" name="invoice_number" title="يرجي ادخال رقم الفاتورة" required>
                             </div>
-
                             <div class="col">
                                 <label>تاريخ الفاتورة</label>
                                 <input class="form-control fc-datepicker" name="invoice_Date" placeholder="YYYY-MM-DD"
