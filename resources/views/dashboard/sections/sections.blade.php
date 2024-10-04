@@ -30,9 +30,11 @@
                 <div class="card-header pb-0">
                     <div class="d-flex justify-content-between">
                         <div class="col-lg-2">
-                            <a class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
-                                data-toggle="modal" href="#modaldemo8">اضافة قسم
-                            </a>
+                            @can('اضافة قسم')
+                                <a class="modal-effect btn btn-outline-primary btn-block" data-effect="effect-scale"
+                                    data-toggle="modal" href="#modaldemo8">اضافة قسم
+                                </a>
+                            @endcan
                         </div>
                     </div>
                 </div>
@@ -80,20 +82,23 @@
                                             <td>{{ $section->section_name }}</td>
                                             <td>{{ $section->created_by }}</td>
                                             <td class="d-flex align-items-center justify-center gap-3 ">
-                                                <a class="modal-effect btn mx-2 btn-outline-primary btn-sm"
-                                                    data-effect="effect-scale" data-toggle="modal"
-                                                    data-id="{{ $section->id }}"
-                                                    data-section_name="{{ $section->section_name }}" title="تعديل"
-                                                    href="#modaldemo7">
-                                                    <i class="las la-edit" style="font-size:20px"></i>
-                                                </a>
-
-                                                <a class="modal-effect btn mx-2 btn-sm btn-danger"
-                                                    data-effect="effect-scale" data-id="{{ $section->id }}"
-                                                    data-section_name="{{ $section->section_name }}" data-toggle="modal"
-                                                    href="#modaldemo6" title="حذف">
-                                                    <i class="las la-trash" style="font-size:20px"></i>
-                                                </a>
+                                                @can('تعديل قسم')
+                                                    <a class="modal-effect btn mx-2 btn-outline-primary btn-sm"
+                                                        data-effect="effect-scale" data-toggle="modal"
+                                                        data-id="{{ $section->id }}"
+                                                        data-section_name="{{ $section->section_name }}" title="تعديل"
+                                                        href="#modaldemo7">
+                                                        <i class="las la-edit" style="font-size:20px"></i>
+                                                    </a>
+                                                @endcan
+                                                @can('حذف قسم')
+                                                    <a class="modal-effect btn mx-2 btn-sm btn-danger"
+                                                        data-effect="effect-scale" data-id="{{ $section->id }}"
+                                                        data-section_name="{{ $section->section_name }}" data-toggle="modal"
+                                                        href="#modaldemo6" title="حذف">
+                                                        <i class="las la-trash" style="font-size:20px"></i>
+                                                    </a>
+                                                @endcan
                                             </td>
                                         </tr>
                                     @endforeach

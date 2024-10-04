@@ -37,9 +37,9 @@ class UserController extends Controller
     public function index(Request $request)
     {
 
-        $users = User::orderBy('id', 'DESC')->paginate(5);
+        $data = User::orderBy('id', 'DESC')->paginate(5);
 
-        return view('Dashboard.users.show_user', compact('users'))
+        return view('Dashboard.users.show_users', compact('data'))
 
             ->with('i', ($request->input('page', 1) - 1) * 5);
 
@@ -62,8 +62,8 @@ class UserController extends Controller
 
         $roles = Role::pluck('name', 'name')->all();
 
-        return view('users.create', compact('roles'));
-
+        return view('Dashboard.users.create', compact('roles'));
+        // return view('users.create');
     }
 
 
@@ -82,39 +82,24 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-
         $this->validate($request, [
-
             'name' => 'required',
-
+            'Status' => 'required',
             'email' => 'required|email|unique:users,email',
-
             'password' => 'required|same:confirm-password',
-
-            'roles' => 'required'
-
+            'roles_name' => 'required'
         ]);
 
-
-
         $input = $request->all();
+        // dd($input);
+
 
         $input['password'] = Hash::make($input['password']);
 
-
-
         $user = User::create($input);
-
-        $user->assignRole($request->input('roles'));
-
-
-
-        return redirect()->route('users.index')
-
-            ->with('success', 'User created successfully');
-
+        $user->assignRole($request->input('roles_name'));
+        return redirect()->route('users.index')->with('success', 'تم اضافة المستخدم بنجاح');
     }
-
 
 
     /**
@@ -134,7 +119,7 @@ class UserController extends Controller
 
         $user = User::find($id);
 
-        return view('users.show', compact('user'));
+        return view('Dashboard.users.show', compact('user'));
 
     }
 
@@ -163,7 +148,7 @@ class UserController extends Controller
 
 
 
-        return view('users.edit', compact('user', 'roles', 'userRole'));
+        return view('Dashboard.users.edit', compact('user', 'roles', 'userRole'));
 
     }
 
@@ -187,15 +172,11 @@ class UserController extends Controller
     {
 
         $this->validate($request, [
-
             'name' => 'required',
-
-            'email' => 'required|email|unique:users,email,' . $id,
-
-            'password' => 'same:confirm-password',
-
-            'roles' => 'required'
-
+            'Status' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|same:confirm-password',
+            'roles_name' => 'required'
         ]);
 
 

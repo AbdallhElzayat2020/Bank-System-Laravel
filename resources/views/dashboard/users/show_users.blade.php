@@ -2,7 +2,7 @@
 @section('css')
 
 @section('title')
-    المستخدمين
+    قائمة المستخدمين
 @stop
 
 <!-- Internal Data table css -->
@@ -31,10 +31,17 @@
 
 @section('content')
 
-@if (session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
+@if (session()->has('success'))
+    <div class="col-lg-3" id="successAlert">
+        <div class="alert alert-success" role="alert">
+            {{ session()->get('success') }}
+        </div>
     </div>
+    <script>
+        setTimeout(function() {
+            document.getElementById('successAlert').style.display = 'none';
+        }, 4000);
+    </script>
 @endif
 
 <!-- row opened -->
@@ -43,7 +50,9 @@
         <div class="card">
             <div class="card-header pb-0">
                 <div class="col-sm-1 col-md-2">
-                    <a class="btn btn-primary btn-sm" href="{{ route('users.create') }}">اضافة مستخدم</a>
+                    @can('اضافة مستخدم')
+                        <a class="btn btn-primary btn-sm" href="{{ route('users.create') }}">اضافة مستخدم</a>
+                    @endcan
                 </div>
             </div>
             <div class="card-body">
@@ -60,14 +69,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($users as $key => $user)
+                            @foreach ($data as $key => $user)
                                 <tr>
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>
                                         @if ($user->Status == 'مفعل')
-                                            <span class="label text-success d-flex">
+                                            <span class="label text-success  text-center  d-flex "
+                                                style="font-size: 18px">
                                                 <div class="dot-label bg-success ml-1"></div>{{ $user->Status }}
                                             </span>
                                         @else
@@ -86,13 +96,17 @@
                                     </td>
 
                                     <td>
-                                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-info"
-                                            title="تعديل"><i class="las la-pen"></i></a>
+                                        @can('تعديل مستخدم')
+                                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-info"
+                                                title="تعديل"><i class="las la-pen"></i></a>
+                                        @endcan
 
-                                        <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
-                                            data-user_id="{{ $user->id }}" data-username="{{ $user->name }}"
-                                            data-toggle="modal" href="#modaldemo8" title="حذف"><i
-                                                class="las la-trash"></i></a>
+                                        @can('حذف مستخدم')
+                                            <a class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
+                                                data-user_id="{{ $user->id }}" data-username="{{ $user->name }}"
+                                                data-toggle="modal" href="#modaldemo8" title="حذف"><i
+                                                    class="las la-trash"></i></a>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach
@@ -113,8 +127,8 @@
                         data-dismiss="modal" type="button"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <form action="{{ route('users.destroy', 'test') }}" method="post">
-                    @method('delete')
-                    @csrf
+                    {{ method_field('delete') }}
+                    {{ csrf_field() }}
                     <div class="modal-body">
                         <p>هل انت متاكد من عملية الحذف ؟</p><br>
                         <input type="hidden" name="user_id" id="user_id" value="">
