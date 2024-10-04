@@ -25,10 +25,13 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
+        // مصادقة المستخدم
         $request->authenticate();
 
+        // إعادة توليد جلسة المستخدم بعد المصادقة
         $request->session()->regenerate();
 
+        // إعادة توجيه المستخدم بعد تسجيل الدخول
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
