@@ -30,18 +30,21 @@ class RoleController extends Controller
 
      */
 
-    // function __construct()
-    // {
 
-    //     $this->middleware('permission:role-list|role-create|role-edit|role-delete', ['only' => ['index', 'store']]);
+    function __construct()
+    {
+        $this->middleware('permission:عرض صلاحية', ['only' => ['index']]);
 
-    //     $this->middleware('permission:role-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:اضافة صلاحية', ['only' => ['create', 'store']]);
 
-    //     $this->middleware('permission:role-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:تعديل صلاحية', ['only' => ['edit', 'update']]);
 
-    //     $this->middleware('permission:role-delete', ['only' => ['destroy']]);
+        $this->middleware('permission:حذف صلاحية', ['only' => ['destroy']]);
 
-    // }
+        $this->middleware('permission:قائمة المستخدمين', ['only' => ['index']]);
+
+        $this->middleware('permission:صلاحيات المستخدمين', ['only' => ['index']]);
+    }
 
 
 
@@ -131,6 +134,7 @@ class RoleController extends Controller
         return redirect()->route('roles.index')
             ->with('success', 'تم تعديل الصلاحية بنجاح');
     }
+
 
     public function destroy($id)
     {

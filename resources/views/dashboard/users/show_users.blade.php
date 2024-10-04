@@ -71,13 +71,12 @@
                         <tbody>
                             @foreach ($data as $key => $user)
                                 <tr>
-                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ ++$i }}</td>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>
                                         @if ($user->Status == 'مفعل')
-                                            <span class="label text-success  text-center  d-flex "
-                                                style="font-size: 18px">
+                                            <span class="label text-success d-flex">
                                                 <div class="dot-label bg-success ml-1"></div>{{ $user->Status }}
                                             </span>
                                         @else
