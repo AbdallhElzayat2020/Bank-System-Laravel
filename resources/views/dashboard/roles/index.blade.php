@@ -3,7 +3,7 @@
     <!--Internal   Notify -->
     <link href="{{ URL::asset('assets/plugins/notify/css/notifIt.css') }}" rel="stylesheet" />
 @section('title')
-    صلاحيات المستخدمين الرئيسية
+    صلاحيات المستخدمين
 @stop
 
 
@@ -21,7 +21,6 @@
 <!-- breadcrumb -->
 @endsection
 @section('content')
-
 
 @if ($errors->any())
     <div class="alert alert-danger">
@@ -48,6 +47,7 @@
         </button>
     </div>
 @endif
+
 
 <!-- row -->
 <div class="row row-sm">
@@ -86,18 +86,19 @@
                                             <a class="btn btn-success btn-sm"
                                                 href="{{ route('roles.show', $role->id) }}">عرض</a>
                                         @endcan
-                                        <a class="btn btn-primary btn-sm"
-                                            href="{{ route('roles.edit', $role->id) }}">تعديل</a>
+
                                         @can('تعديل صلاحية')
-                                            @can('حذف صلاحية')
-                                                @if ($role->name !== 'Admin')
-                                                    {!! Form::open(['method' => 'DELETE', 'route' => ['roles.destroy', $role->id], 'style' => 'display:inline']) !!}
-                                                    {!! Form::submit('حذف', ['class' => 'btn btn-danger btn-sm']) !!}
-                                                    {!! Form::close() !!}
-                                                @endif
-                                            @endcan
+                                            <a class="btn btn-primary btn-sm"
+                                                href="{{ route('roles.edit', $role->id) }}">تعديل</a>
                                         @endcan
 
+                                        @if ($role->name !== 'owner')
+                                            @can('حذف صلاحية')
+                                                {!! Form::open(['method' => 'DELETE', 'route' => ['roles.destroy', $role->id], 'style' => 'display:inline']) !!}
+                                                {!! Form::submit('حذف', ['class' => 'btn btn-danger btn-sm']) !!}
+                                                {!! Form::close() !!}
+                                            @endcan
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

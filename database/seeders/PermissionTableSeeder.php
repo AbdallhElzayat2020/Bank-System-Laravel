@@ -71,7 +71,6 @@ class PermissionTableSeeder extends Seeder
             'تعديل قسم',
             'حذف قسم',
             'الاشعارات',
-
         ];
 
 

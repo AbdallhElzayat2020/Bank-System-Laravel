@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
-// use Illuminate\Support\Facades\Storage as FacadesStorage;
 
 class InvoicesController extends Controller
 {
