@@ -18,7 +18,7 @@
             <div class="dropdown user-pro-body">
                 <div class="">
                     <img alt="user-img" class="avatar avatar-xl brround"
-                        src="{{ URL::asset('assets/img/faces/6.jpg') }}"><span
+                        src="{{ URL::asset('assets/img/user.png') }}"><span
                         class="avatar-status profile-status bg-green"></span>
                 </div>
                 <div class="user-info">
@@ -98,7 +98,7 @@
                             <li><a class="slide-item" href="{{ url('/' . ($page = 'invoices_report')) }}">تقارير الفواتير</a></li>
                         @endcan
                         @can('تقرير العملاء')
-                            <li><a class="slide-item" href="{{ url('/' . ($page = 'roles')) }}">تقارير العملاء</a></li>
+                            <li><a class="slide-item" href="{{ url('/' . ($page = 'customers_report')) }}">تقارير العملاء</a></li>
                         @endcan
                     </ul>
                 </li>

@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Customers_Report;
+use App\Http\Controllers\Customers_ReportController;
 use App\Http\Controllers\InvoiceAchiveController;
 use App\Http\Controllers\Invoices_ReportController;
 use App\Http\Controllers\InvoicesAttachmentController;
@@ -76,7 +78,15 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('invoices_report', [Invoices_ReportController::class, 'invoices_report'])->name('invoices_report');
 
-    Route::post('/search_invoices', [Invoices_ReportController::class, 'search_invoices']);
+    Route::post('/search_invoices', [Invoices_ReportController::class, 'search_invoices'])->name('search_invoices');
+
+
+
+    Route::get('customers_report', [Customers_ReportController::class, 'customers_report'])->name('customers_report');
+
+    Route::post('search_customers', [Customers_ReportController::class, 'search_customers'])->name('search_customers');
+
+
 
     Route::get('Print_invoice/{id}', [InvoicesController::class, 'Print_invoice'])->name('Print_invoice');
 
