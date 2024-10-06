@@ -17,6 +17,5 @@ class AdminController extends Controller
             return view('Dashboard.404');
         }
         // The commented-out line below is not needed
-        // return view($id);
     }
 }

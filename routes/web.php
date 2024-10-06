@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\Customers_Report;
 use App\Http\Controllers\Customers_ReportController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\InvoiceAchiveController;
 use App\Http\Controllers\Invoices_ReportController;
 use App\Http\Controllers\InvoicesAttachmentController;
@@ -29,12 +30,11 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-Route::get('/dashboard', function () {
+// Route::get('/dashboard', function () {
 
-    return view('dashboard');
+//     return view('dashboard');
 
-})->middleware(['auth', 'verified'])->name('dashboard');
-
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 
 
@@ -43,6 +43,8 @@ Route::get('/dashboard', function () {
 
 
 Route::group(['middleware' => ['auth']], function () {
+
+    Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
 
     Route::resource('/sections', SectionsController::class);
 
