@@ -32,6 +32,7 @@ class AddInvoice extends Notification
     /**
      * Get the mail representation of the notification.
      */
+
     public function toMail(object $notifiable): MailMessage
     {
         $url = 'http://127.0.0.1:8000/invoices-details/' . $this->invoice_id;
