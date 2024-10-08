@@ -157,7 +157,7 @@
 
                                 @foreach ($details as $key => $invoice)
                                     <tr>
-                                        <td>{{ $i }}</td>
+                                        <td>{{ $key + 1 }}</td>
                                         <td>{{ $invoice->invoice_number }} </td>
                                         <td>{{ $invoice->invoice_Date }}</td>
                                         <td>{{ $invoice->Due_date }}</td>
