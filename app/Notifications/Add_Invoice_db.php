@@ -7,16 +7,16 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class AddInvoice extends Notification
+class Add_Invoice_db extends Notification
 {
     use Queueable;
-    private $invoice_id;
+
     /**
      * Create a new notification instance.
      */
-    public function __construct($invoice_id)
+    public function __construct()
     {
-        $this->invoice_id = $invoice_id;
+        //
     }
 
     /**
@@ -26,21 +26,18 @@ class AddInvoice extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['mail'];
+        return ['database'];
     }
 
     /**
      * Get the mail representation of the notification.
      */
-
     public function toMail(object $notifiable): MailMessage
     {
-        $url = 'http://127.0.0.1:8000/invoices-details/' . $this->invoice_id;
-
         return (new MailMessage)
-            ->line('اضافة فاتورة جديدة')
-            ->action('عرض الفاتورة', url($url))
-            ->line('شكرا لاستخدماتك النظام الخاص بنا  للتواصل  +201212484233');
+                    ->line('The introduction to the notification.')
+                    ->action('Notification Action', url('/'))
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -48,13 +45,6 @@ class AddInvoice extends Notification
      *
      * @return array<string, mixed>
      */
-
-    public function toDataBase()
-    {
-        return [
-
-        ];
-    }
     public function toArray(object $notifiable): array
     {
         return [
