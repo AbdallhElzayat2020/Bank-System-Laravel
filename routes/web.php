@@ -58,7 +58,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('/InvoiceAttachments', InvoicesAttachmentController::class);
 
-    Route::get('/invoices-details/{id}', [InvoicesDetailsController::class, 'index']);
+    Route::get('/invoices-details/{id}', [InvoicesDetailsController::class, 'index'])->name('invoices-details');
 
     Route::get('/change_status/{id}', [InvoicesController::class, 'change_status'])->name('change_status');
 
@@ -70,6 +70,9 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::post('/delete_file', [InvoicesDetailsController::class, 'destroy'])->name('delete_file');
 
+    Route::get('markRead_all', [InvoicesController::class, 'markRead_all'])->name('markRead_all');
+
+    Route::patch('/notifications/{id}/read', [InvoicesController::class, 'markAsRead'])->name('notification.read');
 
 
     Route::get('invoice_paid', [InvoicesController::class, 'invoice_paid'])->name('invoice_paid');

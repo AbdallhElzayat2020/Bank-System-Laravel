@@ -75,7 +75,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'>
+                        <table id="example1" class="table key-buttons text-md-nowrap" data-page-length='25'>
                             <thead>
                                 <tr>
                                     <th class="border-bottom-0">#</th>

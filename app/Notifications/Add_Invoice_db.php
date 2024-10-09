@@ -53,7 +53,6 @@ class Add_Invoice_db extends Notification
             'title' => 'تم اضافة فاتورة جديدة بواسطة ',
             'id' => $this->invoices->id,
             'user' => Auth::user()->name,
-
         ];
     }
     public function toArray(object $notifiable): array

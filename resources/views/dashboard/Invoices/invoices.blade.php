@@ -70,7 +70,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table data-page-length='50' class="table text-md-nowrap" id="example1">
+                        <table data-page-length='25' class="table text-md-nowrap" id="example1">
                             <thead>
                                 <tr>
                                     <th class="wd-15p border-bottom-0">ID</th>

@@ -205,7 +205,7 @@
                                 <div class="d-flex">
                                     <h6 class="dropdown-title mb-1 tx-15 text-white font-weight-semibold">الاشعارات</h6>
                                     <span class="badge badge-pill badge-warning mr-auto my-auto float-left"><a
-                                            href="\MarkAsRead_all">تعين قراءة الكل</a></span>
+                                            href="\markRead_all">تعين قراءة الكل</a></span>
                                 </div>
                                 <p class="dropdown-title-text subtext mb-0 text-white op-6 pb-0 tx-12 ">
                                 <h6 style="color: yellow" id="notifications_count">
@@ -217,7 +217,7 @@
                                 @foreach (auth()->user()->unreadNotifications as $notification)
                                     <div class="main-notification-list Notification-scroll">
                                         <a class="d-flex p-3 border-bottom"
-                                            href="{{ url('InvoicesDetails') }}/{{ $notification->data['id'] }}">
+                                            href="{{ url('invoices-details') }}/{{ $notification->data['id'] }}">
                                             <div class="notifyimg bg-pink">
                                                 <i class="la la-file-alt text-white"></i>
                                             </div>
@@ -254,10 +254,7 @@
                                 <div class="main-img-user"><img alt=""
                                         src="{{ URL::asset('assets/img/faces/6.jpg') }}" class=""></div>
                                 <div class="mr-3 my-auto">
-                                    @auth
-
-                                        <h6>{{ Auth::user()->name }}</h6><span>{{ Auth::user()->email }}</span>
-                                    @endauth
+                                    <h6>{{ Auth::user()->name }}</h6><span>{{ Auth::user()->email }}</span>
                                 </div>
                             </div>
                         </div>

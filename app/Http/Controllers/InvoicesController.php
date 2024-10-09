@@ -297,4 +297,26 @@ class InvoicesController extends Controller
         }
 
     }
+    public function markRead_all()
+    {
+        $userUnreadNotification = auth()->user()->unreadNotifications;
+
+        if ($userUnreadNotification) {
+            $userUnreadNotification->markAsRead();
+            return back();
+        }
+
+    }
+    public function markAsRead($id)
+    {
+        // Find the notification by ID and mark it as read
+        $notification = Auth::user()->unreadNotifications->find($id);
+
+        if ($notification) {
+            $notification->markAsRead(); // Mark the notification as read
+        }
+
+        // Redirect to the specific notification's related link, e.g., invoice details
+        return redirect()->route('invoices-details', ['id' => $notification->data['id']]);
+    }
 }
